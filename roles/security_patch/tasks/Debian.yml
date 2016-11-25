@@ -1,0 +1,11 @@
+---
+- name: install security plugin
+  apt: name=unattended-upgrades state=latest
+
+- name: update security patches
+  shell: unattended-upgrade
+
+- name: Restart the instance
+  ignore_errors: yes  
+  shell: reboot
+  when: Restart_instance

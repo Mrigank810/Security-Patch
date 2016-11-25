@@ -1,0 +1,16 @@
+---
+- name: Install Yum Security Plugin
+  yum: name=yum-plugin-security state=latest
+  when: install_plugin 
+
+- name: Update security pacthes
+  shell: yum --security update -y
+
+- name: Restart the instance
+  shell: reboot
+  async: 0
+  poll: 0
+  when: Restart_instance 
+ 
+- name: wait for instance to start
+  local_action: wait_for host={{ ansible_ssh_host }} state=started

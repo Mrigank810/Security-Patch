@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  min_ansible_version: 1.7
+  platforms:
+    # Red Hat and derivatives
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Amazon
+      versions:
+        - 2014.03
+    # Debian and derivatives
+    - name: Debian
+      versions:
+        - wheezy
+        - jessie
+    - name: Ubuntu
+      versions:
+        - trusty

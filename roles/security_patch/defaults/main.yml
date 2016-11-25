@@ -1,0 +1,3 @@
+---
+#update the variable as true if you want to restart the instance else mention false
+Restart_instance: True

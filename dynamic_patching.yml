@@ -1,0 +1,8 @@
+---
+- name: Install Security Patches
+  hosts: tag_Environment_ec2test
+  remote_user: ec2-user
+  sudo: True
+  sudo_user: root
+  roles:
+    - security_patch

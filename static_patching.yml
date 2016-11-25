@@ -1,0 +1,9 @@
+---
+- name: Install Security Patches
+  hosts: security-patch-servers
+  remote_user: reanro
+  sudo: True
+  sudo_user: root
+  roles:
+    - security_patch
+
