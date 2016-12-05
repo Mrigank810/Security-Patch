@@ -1,0 +1,2 @@
+---
+Name: "{{ ansible_ec2_instance_id }}"_after_patch_"{{ ansible_date_time.date }}"

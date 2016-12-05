@@ -1,51 +1,24 @@
 ---
-- name: facts
+- name: Create AMI of instances
   hosts: tag_Environment_ec2test
-  remote_user: ec2-user
-  tasks:
-    - name: Gather facts
-      action: ec2_facts
-      ignore_errors: True
-
-    - debug: var=ansible_ec2_instance_id
-
-    - name: stop the instance
-      local_action:
-       module: ec2
-       instance_tags:
-          Environment: ec2test
-       state: stopped
-       region: us-east-1
-
-    - name: wait for instance to stop
-      pause: minutes=2
-
-    - name: create AMI
-      local_action:
-       module: ec2_ami
-       name: mrigank
-       instance_id: "{{ ansible_ec2_instance_id }}"
-       region: "{{ region }}"
-       wait: yes
-       tags:
-         Name: Mrigank
-         Service: mriganktest
-
-    - name: start the instance
-      local_action:
-       module: ec2
-       instance_tags:
-          Environment: ec2test
-       state: running
-       region: us-east-1
-
-    - name: wait for instance to start
-      pause: minutes=2
+  remote_user: "{{ user }}"
+  roles:
+    - AMI_creation
+  set_fact:
+    patched: False
 
 - name: Install Security Patches
   hosts: tag_Environment_ec2test
-  remote_user: ec2-user
+  remote_user: "{{ user }}"
   sudo: True
   sudo_user: root
   roles:
-    - security_patch 
+    - security_patch
+
+- name: Create AMI of the updated instances
+  hosts: tag_Environment_ec2test
+  remote_user: "{{ user }}"
+  roles:
+    - AMI_creation_updated
+  set_fact:
+    patched: True

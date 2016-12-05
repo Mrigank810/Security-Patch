@@ -1,0 +1,2 @@
+---
+AMI_Name: "{{ ansible_ec2_instance_id }}"_before_patch_"{{ ansible_date_time.date }}"
