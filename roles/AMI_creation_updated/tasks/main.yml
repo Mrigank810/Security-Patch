@@ -13,18 +13,18 @@
    region: us-east-1
 
 - name: wait for instance to stop
-  pause: minutes=2
+  pause: minutes=3
 
 - name: create AMI
   local_action:
    module: ec2_ami
-   name: mrigank
+   name: After_patched
    instance_id: "{{ ansible_ec2_instance_id }}"
    region: "{{ region }}"
    wait: yes
    tags:
-     Name: Mrigank
-     Service: mriganktest
+     Name: "{{ AMI_Name }}"
+     Date: "{{ creation_date }}"
 
 - name: start the instance
   local_action:
@@ -32,6 +32,3 @@
    instance_ids: "{{ ansible_ec2_instance_id }}"
    state: running
    region: us-east-1
-
-- name: wait for instance to start
-  pause: minutes=2

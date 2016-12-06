@@ -1,0 +1,4 @@
+---
+#Tags of the backup AMI before patching
+AMI_Name: "{{ ansible_ec2_instance_id }}"
+creation_date: "{{ ansible_date_time.date }}"

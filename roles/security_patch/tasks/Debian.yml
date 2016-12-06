@@ -3,9 +3,15 @@
   apt: name=unattended-upgrades state=latest
 
 - name: update security patches
-  shell: unattended-upgrade
+  shell: unattended-upgrades
 
 - name: Restart the instance
-  ignore_errors: yes  
-  shell: reboot
-  when: Restart_instance
+  shell: shutdown -r now
+  async: 1
+  poll: 0
+  sudo: true
+  ignore_errors: true
+  when: Restart_instance 
+ 
+- name: wait for instance to start
+  local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=30 timeout=300 connect_timeout=15

@@ -2,23 +2,9 @@
 - name: Create AMI of instances
   hosts: tag_Environment_ec2test
   remote_user: "{{ user }}"
-  roles:
-    - AMI_creation
-  set_fact:
-    patched: False
-
-- name: Install Security Patches
-  hosts: tag_Environment_ec2test
-  remote_user: "{{ user }}"
   sudo: True
   sudo_user: root
   roles:
+    - AMI_creation
     - security_patch
-
-- name: Create AMI of the updated instances
-  hosts: tag_Environment_ec2test
-  remote_user: "{{ user }}"
-  roles:
     - AMI_creation_updated
-  set_fact:
-    patched: True

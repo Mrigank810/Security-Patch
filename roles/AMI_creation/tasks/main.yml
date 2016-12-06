@@ -1,12 +1,4 @@
 ---
-- name: include variables before_patch
-  include_vars: ../vars/before_patch.yml
-  when: not patched
-
-- name: include variable after_patch
-  include_vars: ../vars/after_patch.yml
-  when: patched
-
 - name: Gather facts
   action: ec2_facts
   ignore_errors: True
@@ -21,17 +13,18 @@
    region: us-east-1
 
 - name: wait for instance to stop
-  pause: minutes=2
+  pause: minutes=3
 
 - name: create AMI
   local_action:
    module: ec2_ami
-   name: mrigank
+   name: Before_patched
    instance_id: "{{ ansible_ec2_instance_id }}"
    region: "{{ region }}"
    wait: yes
    tags:
      Name: "{{ AMI_Name }}"
+     Date: "{{ creation_date }}"
 
 - name: start the instance
   local_action:
