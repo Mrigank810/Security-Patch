@@ -10,10 +10,8 @@
    module: ec2
    instance_ids: "{{ ansible_ec2_instance_id }}"
    state: stopped
-   region: us-east-1
-
-- name: wait for instance to stop
-  pause: minutes=3
+   region: "{{ region }}"
+   wait: true
 
 - name: create AMI
   local_action:
@@ -31,4 +29,5 @@
    module: ec2
    instance_ids: "{{ ansible_ec2_instance_id }}"
    state: running
-   region: us-east-1
+   region: "{{ region }}"
+   wait: true

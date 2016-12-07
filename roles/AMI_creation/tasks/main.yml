@@ -10,10 +10,8 @@
    module: ec2
    instance_ids: "{{ ansible_ec2_instance_id }}"
    state: stopped
-   region: us-east-1
-
-- name: wait for instance to stop
-  pause: minutes=3
+   region: "{{ region }}"
+   wait: true
 
 - name: create AMI
   local_action:
@@ -31,7 +29,8 @@
    module: ec2
    instance_ids: "{{ ansible_ec2_instance_id }}"
    state: running
-   region: us-east-1
+   region: "{{ region }}"
+   wait: true
 
 - name: wait for instance to start
-  pause: minutes=2
+  local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=30 timeout=300 connect_timeout=15

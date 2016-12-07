@@ -1,0 +1,10 @@
+---
+- name: Create AMI of instances
+  hosts: security-patch-servers
+  remote_user: "{{ user }}"
+  sudo: True
+  sudo_user: root
+  roles:
+    - AMI_creation
+    - security_patch
+    - AMI_creation_updated
